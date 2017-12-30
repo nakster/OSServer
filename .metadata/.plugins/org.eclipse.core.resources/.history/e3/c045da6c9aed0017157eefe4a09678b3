@@ -1,0 +1,20 @@
+public class users {
+
+	 Name
+	 Address
+	 
+	 Age
+	 Weight
+	 Height
+	 
+	// Variables
+	private String name;
+	private String address;
+	private String ppsNumber;
+	private String username;
+	private String password;
+	private int age = 0;
+	
+	
+
+}

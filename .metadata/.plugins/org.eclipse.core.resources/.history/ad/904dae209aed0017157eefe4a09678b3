@@ -1,0 +1,20 @@
+public class users {
+
+	 Name
+	 Address
+	 PPS	Number
+	 Age
+	 Weight
+	 Height
+	 
+	// Variables
+	private String name;
+	private String address;
+	private String bankAcNo;
+	private String username;
+	private String password;
+	private double balance = 0;
+	
+	
+
+}

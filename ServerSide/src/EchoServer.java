@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class EchoServer {
   public static void main(String[] args) throws Exception {
@@ -27,6 +28,7 @@ class ClientServiceThread extends Thread {
   boolean running = true;
   ObjectOutputStream out;
   ObjectInputStream in;
+  ArrayList<users> list = new ArrayList<users>();
 
   ClientServiceThread(Socket s, int i) {
     clientSocket = s;
@@ -62,23 +64,41 @@ class ClientServiceThread extends Thread {
 				sendMessage("Press 1 to Register with the system\nPress 2 to Log-in to the fitness system \nPress 3 to exit");
 				message = (String)in.readObject();
 				
-				if(message.compareToIgnoreCase("1")==0)
-				{
-					System.out.println("User wishes to Register with the system");
-					sendMessage("Please enter a Name");
-					String name = (String)in.readObject();
-					sendMessage("Please enter Address");
-					String address = (String)in.readObject();
-					sendMessage("Please enter PPS Number");
-					String pps = (String)in.readObject();
-					sendMessage("Please enter Age");
-					String age = (String)in.readObject();
-					sendMessage("Please enter Weight");
-					String weight = (String)in.readObject();
-					sendMessage("Please enter Height");
-					String height = (String)in.readObject();
+				while(message.compareToIgnoreCase("3")!=0) {
 					
-				}
+					if(message.compareToIgnoreCase("1")==0)
+					{
+						System.out.println("User wishes to Register with the system");
+						sendMessage("Please enter a Name");
+						String name = (String)in.readObject();
+						sendMessage("Please enter Address");
+						String address = (String)in.readObject();
+						sendMessage("Please enter PPS Number");
+						String pps = (String)in.readObject();
+						sendMessage("Please enter Age");
+						String age = (String)in.readObject();
+						sendMessage("Please enter Weight");
+						String weight = (String)in.readObject();
+						sendMessage("Please enter Height");
+						String height = (String)in.readObject();
+						sendMessage("Please enter UserName");
+						String username = (String)in.readObject();
+						sendMessage("Please enter Password");
+						String password = (String)in.readObject();
+						
+						list.add(new users(name, address, pps,age, weight ,height,username, password));
+						
+						System.out.println("\n\n"+list);
+						for(users u:list){
+							System.out.println(u.getName());
+						
+						}			
+						
+					}
+					
+					sendMessage("Press 1 to Register with the system\nPress 2 to Log-in to the fitness system \nPress 3 to exit");
+					message = (String)in.readObject();
+				}		
 				
 			}
 			catch(ClassNotFoundException classnot){

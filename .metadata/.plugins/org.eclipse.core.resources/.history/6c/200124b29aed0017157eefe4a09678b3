@@ -1,0 +1,35 @@
+public class users {
+	
+	// Variables
+	private String name;
+	private String address;
+	private String ppsNumber;
+	private int age = 0;
+	private double weight =0;
+	private double height =0;
+	private String username;
+	private String password;
+
+	//empty constructor 
+	public users() {
+		
+	}
+	//constructor 
+	public users(String name, String address, String ppsNumber, int age, double weight, double height, String username,
+			String password) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.ppsNumber = ppsNumber;
+		this.age = age;
+		this.weight = weight;
+		this.height = height;
+		this.username = username;
+		this.password = password;
+	}
+	
+	
+	
+	
+
+}
