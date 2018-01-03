@@ -1,4 +1,6 @@
-public class users {
+import java.io.Serializable;
+
+public class users implements Serializable{
 	
 	// Variables
 	private String name;
