@@ -38,6 +38,8 @@ class ClientServiceThread extends Thread {
 	File inputfile = new File("Details.txt");
 	ArrayList<Fitness> fitnessList = new ArrayList<Fitness>();
 	File fitnessFile = new File("Fitness.txt");
+	ArrayList<MealRecord> mealList = new ArrayList<MealRecord>();
+	File MealFile = new File("Meal.txt");
 	boolean foundUser = false;
 	boolean foundPass = false;
 
@@ -204,7 +206,6 @@ class ClientServiceThread extends Thread {
 
 									}
 
-
 									sendMessage("Please Add the Duration");
 									String duration = (String)in.readObject();
 
@@ -213,20 +214,51 @@ class ClientServiceThread extends Thread {
 										duration = (String)in.readObject();
 									}
 
-									if (Integer.parseInt(mode) > 1 || Integer.parseInt(mode) < 4) {
+									if (Integer.parseInt(mode) > 1 && Integer.parseInt(mode) < 4) {
 										fitnessList.add(new Fitness(userName, mode, duration));
 									}else {
 										System.out.println("Please Enter one of the above options");
 									}
 
-//									for(Fitness u:fitnessList){
-//
-//										System.out.println(u.getMode());
-//
-//									}
+									for(Fitness u:fitnessList){
+
+										System.out.println(u.getMode());
+
+									}
 								}//end of first if statement
 								else if(message.compareToIgnoreCase("2")==0) {
-									
+									//add a meal 
+									System.out.println("Add a Meal Record");
+									sendMessage("Add a Meal Record");
+									//ask for the options
+									sendMessage("Please Add the Meal:\n1)Type A\n2)Tybe B\n3)Tybe C");
+									String meal = (String)in.readObject();
+
+									while (!(Integer.parseInt(meal) > 0 && Integer.parseInt(meal) < 4)) {
+										sendMessage("Please Add the Meal:\n1)Type A\n2)Tybe B\n3)Tybe C");
+										meal = (String)in.readObject();
+
+									}
+									//ask for the desc
+									sendMessage("Please Add the Description");
+									String desc = (String)in.readObject();
+
+									while (!(desc.length() < 100)) {
+										sendMessage("Please Add the Duration");
+										desc = (String)in.readObject();
+									}
+									//add it to the arraylist 
+									if (Integer.parseInt(meal) > 1 && Integer.parseInt(meal) < 4) {
+										mealList.add(new MealRecord(userName, meal, desc));
+									}else {
+										System.out.println("Please Enter one of the above options");
+									}
+									//display
+//									for(MealRecord u:mealList){
+//
+//										System.out.println(u.getDesc() + " " + u.getMealType());
+//
+//									}
 									
 								}
 							}while(!message.equals("3"));
