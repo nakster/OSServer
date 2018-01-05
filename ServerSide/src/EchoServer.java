@@ -36,9 +36,11 @@ class ClientServiceThread extends Thread {
 	ObjectInputStream in;
 	ArrayList<users> list = new ArrayList<users>();
 	File inputfile = new File("Details.txt");
+	ArrayList<Fitness> fitnessList = new ArrayList<Fitness>();
+	File fitnessFile = new File("Fitness.txt");
 	boolean foundUser = false;
 	boolean foundPass = false;
-	
+
 	//username boolean to ask for password
 	boolean userNam = false;
 	boolean userPass = false;
@@ -141,76 +143,25 @@ class ClientServiceThread extends Thread {
 						} catch (IOException e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
-						}
-
-						//					System.out.println("\n\n"+list);
-						//					for(users u:list){
-						//						System.out.println(u.getName());
-						//						System.out.println(u.getAddress());
-						//					
-						//					}						
+						}					
 
 					}
 					//this here logs the user in 
-					else if(message.compareToIgnoreCase("2")==0) {	
-//tried this way but didn't work properly
-//
-//						int check = 0;
-//					try {	
-//						do {
-//							System.out.println("User wishes to Login with the system");
-//							sendMessage("Please enter a UserName");
-//							String userName = (String)in.readObject();	
-//
-//							for(users u:list){
-//
-//								if(userName.equalsIgnoreCase(u.getUsername())) {
-//									System.out.println(u.getUsername() + " " + u.getHeight() + " " + u.getAge() + " " + u.getPassword());
-//									sendMessage("Success");
-//									//login = (String)in.readObject();	
-//									check = 1;
-//								}
-//							}	
-//						}while(check!=1);
-//						
-//						
-//					}catch (ClassNotFoundException classNot) {
-//							System.err.println("data received in unknown format");
-//						}
-//							
-//						if(check == 1) {
-//							do {
-//								System.out.println("User wishes to Login with the system");
-//								sendMessage("Please enter a password");
-//								String password = (String)in.readObject();	
-//
-//								for(users u1:list){
-//
-//									if(password.equals(u1.getPassword())) {
-//								//	System.out.println(u1.getUsername() + " " + u1.getHeight() + " " + u1.getAge() + " " + u1.getPassword());
-//										sendMessage("pass");
-//										//login = (String)in.readObject();	
-//										check = 2;
-//									}
-//								}	
-//							}while(check!=2);
-//							
-//						} 
-						
+					else if(message.compareToIgnoreCase("2")==0) {							
 						//ask the user for the username
 						System.out.println("User wishes to Login with the system");
 						sendMessage("Please enter a UserName");
 						String userName = (String)in.readObject();	
 						//check if the userName exists 
 						for(users u:list){
-							
+
 							if(userName.equalsIgnoreCase(u.getUsername())) {
-								
+
 								System.out.println("user found");
 								foundUser = true;
-								
+
 							}
-							
+
 						}
 						//ask the user for password
 						System.out.println("User wishes to Login with the system");
@@ -218,26 +169,72 @@ class ClientServiceThread extends Thread {
 						String Password = (String)in.readObject();	
 						//check if the password exists
 						for(users u:list){
-							
+
 							if(Password.equals(u.getPassword())) {
-								
+
 								System.out.println("Password found");
 								foundPass = true;
-								
+
 							}
-							
+
 						}
 						//if both the userName and password Exists then log in 
 						if(foundUser == true && foundPass == true) {
-							
+
 							System.out.println("both found User And Password");
 							sendMessage("User And Password Found");
-							
+
+							do {
+								sendMessage("Press 1 Add a fitness record\nPress 2 to Add a meal record\nPress 3 to exit");
+								message = (String)in.readObject();
+
+								if(message.compareToIgnoreCase("1")==0) {
+
+									String newMode;
+
+									System.out.println("Add a Fitness Record");
+									sendMessage("Add a Fitness Record");
+
+									sendMessage("Please Add the mode:\n1)Walking\n2)Running\n3)Cycling");
+									String mode = (String)in.readObject();
+
+									while (!(Integer.parseInt(mode) > 0 && Integer.parseInt(mode) < 4)) {
+										sendMessage("Please Add the mode:\n1)Walking\n2)Running\n3)Cycling");
+										mode = (String)in.readObject();
+
+									}
+
+
+									sendMessage("Please Add the Duration");
+									String duration = (String)in.readObject();
+
+									while (!(Integer.parseInt(duration) > 0 && Integer.parseInt(duration) < 101)) {
+										sendMessage("Please Add the Duration");
+										duration = (String)in.readObject();
+									}
+
+									if (Integer.parseInt(mode) > 1 || Integer.parseInt(mode) < 4) {
+										fitnessList.add(new Fitness(userName, mode, duration));
+									}else {
+										System.out.println("Please Enter one of the above options");
+									}
+
+//									for(Fitness u:fitnessList){
+//
+//										System.out.println(u.getMode());
+//
+//									}
+								}//end of first if statement
+								else if(message.compareToIgnoreCase("2")==0) {
+									
+									
+								}
+							}while(!message.equals("3"));
 						}//else ask again 
 						else {
 							System.out.println("User Or Password Not Found");
 							sendMessage("User Or Password Not Found\nPlease Try Again");
-							
+
 						}
 
 					}
